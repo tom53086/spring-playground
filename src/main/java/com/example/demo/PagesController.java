@@ -1,9 +1,6 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PagesController {
@@ -43,5 +40,11 @@ public class PagesController {
     @PostMapping("/math/sum")
     public String sum(@RequestParam Integer[] n){
         return MathService.sum(n).toString();
+    }
+
+    @RequestMapping("/math/volume/{length}/{width}/{height}")
+    public String volume(@PathVariable int length, @PathVariable int width, @PathVariable int height){
+        int result = length * width * height;
+        return String.format("The volume of a %dx%dx%d rectangle is %d", length, width, height, result);
     }
 }

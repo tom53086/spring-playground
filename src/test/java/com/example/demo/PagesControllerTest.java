@@ -7,10 +7,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 //@RunWith(SpringRunner.class)
 @WebMvcTest(PagesController.class)
@@ -78,6 +77,26 @@ public class PagesControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("2"));
     }
+    @Test
+    public void testPostRec() throws Exception {
+        this.mvc.perform(post("/math/volume/3/4/5"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of a 3x4x5 rectangle is 60"));
+    }
+    @Test
+    public void testPatchRec() throws Exception {
+        this.mvc.perform(patch("/math/volume/3/4/5"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of a 3x4x5 rectangle is 60"));
+    }
+    @Test
+    public void testGetRec() throws Exception {
+        this.mvc.perform(get("/math/volume/3/4/5"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of a 3x4x5 rectangle is 60"));
+    }
+
+
     //    @Test
 //    public void testIndexEndpoint() throws Exception {
 //        this.mvc.perform(get("/").accept(MediaType.TEXT_PLAIN))
