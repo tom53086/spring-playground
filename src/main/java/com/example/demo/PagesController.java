@@ -2,6 +2,8 @@ package com.example.demo;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 public class PagesController {
 
@@ -46,5 +48,25 @@ public class PagesController {
     public String volume(@PathVariable int length, @PathVariable int width, @PathVariable int height){
         int result = length * width * height;
         return String.format("The volume of a %dx%dx%d rectangle is %d", length, width, height, result);
+    }
+
+    @PostMapping(value = "/math/area")
+    public String area(@RequestParam HashMap<String, String> formData){
+        if(formData.get("type").equals("circle")){
+            if(!formData.containsKey("radius")) return "Invalid";
+
+            double radius = Double.parseDouble(formData.get("radius"));
+            double result = Math.PI * radius * radius;
+            return String.format("Area of a circle with a radius of %.0f is %.5f", radius, result);
+
+        } else if(formData.get("type").equals("rectangle")){
+           if(!(formData.containsKey("width") && formData.containsKey("height"))) return "Invalid";
+
+            int width = Integer.parseInt(formData.get("width"));
+            int height = Integer.parseInt(formData.get("height"));
+            int result = width * height;
+            return String.format("Area of a %dx%d rectangle is %d", width, height, result);
+        }
+        return "Invalid. Need to submit a circle or rectangle";
     }
 }

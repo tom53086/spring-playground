@@ -1,6 +1,7 @@
 package com.example.demo;
 
 public class MathService {
+
     public static Integer calculate(String operation, int x, int y) {
         if (operation.equals("subtract")) {
             return Math.subtractExact(x, y);
@@ -19,4 +20,5 @@ public class MathService {
         }
         return sum;
     }
+
 }
