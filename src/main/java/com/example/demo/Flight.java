@@ -13,7 +13,7 @@ public class Flight {
     private List<Ticket> tickets;
 
     @JsonProperty("Departs")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "PST")
     public Date getDeparts() {
         return departs;
     }
