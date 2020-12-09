@@ -2,7 +2,12 @@ package com.example.demo;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+
+import static java.util.Calendar.APRIL;
 
 @RestController
 public class PagesController {
@@ -68,5 +73,50 @@ public class PagesController {
             return String.format("Area of a %dx%d rectangle is %d", width, height, result);
         }
         return "Invalid. Need to submit a circle or rectangle";
+    }
+
+    @GetMapping("/flights/flight")
+    public Flight getFlight(){
+        Flight.Person person = new Flight.Person();
+        person.setFirstName("Some name");
+        person.setLastName("Some other name");
+
+        Flight.Ticket ticket = new Flight.Ticket();
+        ticket.setPassenger(person);
+        ticket.setPrice(200);
+
+        Flight flight = new Flight();
+        flight.setDeparts(new Date(2017 - 1900, APRIL, 21, 14, 34));
+        flight.setTickets(Arrays.asList(ticket));
+
+        return flight;
+    }
+
+    @GetMapping("/flights")
+    public List<Flight> getListOfFlights(){
+        Flight.Person person1 = new Flight.Person();
+        person1.setFirstName("Some name");
+        person1.setLastName("Some other name");
+
+        Flight.Ticket ticket1 = new Flight.Ticket();
+        ticket1.setPassenger(person1);
+        ticket1.setPrice(200);
+
+        Flight flight1 = new Flight();
+        flight1.setDeparts(new Date(2017 - 1900, APRIL, 21, 14, 34));
+        flight1.setTickets(Arrays.asList(ticket1));
+
+        Flight.Person person2 = new Flight.Person();
+        person2.setFirstName("Some name");
+
+        Flight.Ticket ticket2 = new Flight.Ticket();
+        ticket2.setPassenger(person2);
+        ticket2.setPrice(400);
+
+        Flight flight2 = new Flight();
+        flight2.setDeparts(new Date(2017 - 1900, APRIL, 21, 14, 34));
+        flight2.setTickets(Arrays.asList(ticket2));
+
+        return Arrays.asList(flight1, flight2);
     }
 }
