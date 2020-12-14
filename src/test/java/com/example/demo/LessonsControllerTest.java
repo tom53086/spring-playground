@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 
 @SpringBootTest
 //@RunWith(LessonsController.class)
@@ -58,6 +59,25 @@ public class LessonsControllerTest {
         this.mvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", instanceOf(Number.class)));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testPatch() throws Exception{
+        Lesson lesson = new Lesson();
+        //lesson.setId(1L);
+        lesson.setTitle("test");
+        lesson.setDeliveredOn(new Date(2017, 04, 12));
+        repository.save(lesson);
+
+        MockHttpServletRequestBuilder request = patch("/lessons/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"title\": \"test1\", \"deliveredOn\": \"2017-04-12\"}");
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", equalTo(lesson.getTitle())));
     }
 
 }

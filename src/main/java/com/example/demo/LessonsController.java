@@ -3,6 +3,7 @@ package com.example.demo;
 import org.junit.runner.Runner;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @RestController
@@ -33,6 +34,19 @@ public class LessonsController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         this.repository.deleteById(id);
+    }
+
+    @PatchMapping("/{id}")
+    public Lesson patch(@PathVariable Long id, @RequestBody Lesson lessonDetails) {
+
+        Optional<Lesson> lesson = this.repository.findById(id);
+        if(lesson.isPresent()){
+            Lesson newLesson = lesson.get();
+            newLesson.setTitle(lessonDetails.getTitle());
+            newLesson.setDeliveredOn(lessonDetails.getDeliveredOn());
+            this.repository.save(newLesson);
+        }
+        return lesson.get();
     }
 
 }
