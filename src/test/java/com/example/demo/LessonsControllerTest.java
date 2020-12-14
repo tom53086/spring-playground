@@ -61,23 +61,40 @@ public class LessonsControllerTest {
                 .andExpect(jsonPath("$.id", instanceOf(Number.class)));
     }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void testPatch() throws Exception{
-        Lesson lesson = new Lesson();
-        //lesson.setId(1L);
-        lesson.setTitle("test");
-        lesson.setDeliveredOn(new Date(2017, 04, 12));
-        repository.save(lesson);
-
-        MockHttpServletRequestBuilder request = patch("/lessons/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"title\": \"test1\", \"deliveredOn\": \"2017-04-12\"}");
-
-        this.mvc.perform(request)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", equalTo(lesson.getTitle())));
-    }
+//    @Test
+//    @Transactional
+//    @Rollback
+//    public void testPatch() throws Exception{
+//        Lesson lesson = new Lesson();
+//        //lesson.setId(1L);
+//        lesson.setTitle("test");
+//        lesson.setDeliveredOn(new Date(2017, 04, 12));
+//        repository.save(lesson);
+//
+//        MockHttpServletRequestBuilder request = patch("/lessons/1")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content("{\"title\": \"test1\", \"deliveredOn\": \"2017-04-12\"}");
+//
+//        this.mvc.perform(request)
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.title", equalTo(lesson.getTitle())));
+//    }
+//
+//    @Test
+//    @Transactional
+//    @Rollback
+//    public void testGetTitle() throws Exception{
+//        Lesson lesson = new Lesson();
+//        lesson.setTitle("test5");
+//        lesson.setDeliveredOn(new Date(2019, 4, 14));
+//        repository.save(lesson);
+//
+//        MockHttpServletRequestBuilder request = get("/lessons/find/test5")
+//                .contentType(MediaType.APPLICATION_JSON);
+//
+//        this.mvc.perform(request)
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].id", equalTo(lesson.getTitle())));
+//    }
 
 }
